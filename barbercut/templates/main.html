@@ -1,0 +1,124 @@
+{% extends "base.html" %} 
+{% block header %}
+<nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Магнитный стиль</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Переключатель навигации">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Главная</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#masters">Мастера</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#services">Услуги</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#reviews">Отзывы</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#orderForm">Запись на стрижку</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <div class="row">
+
+    <section class="col-12 mb-4">
+      <h2>О нас</h2>
+      <p>
+        Добро пожаловать в "Магнитный стиль" — уникальный барбер-шоп, где стрижка превращается в настоящее искусство благодаря магии металла и мастерству нашего основателя, Магнето!
+        Мы верим, что каждая стрижка — это не просто изменение внешности, а возможность выразить свою индивидуальность и стиль. Наша команда профессионалов, под предводительством Магнето, готова воплотить в жизнь самые смелые идеи и пожелания наших клиентов. Мы используем передовые технологии и необычные методы, чтобы ваши волосы всегда выглядели на высоте.
+        В "Магнитном стиле" мы предлагаем широкий спектр услуг, от обычных стрижек до эксклюзивных укладок с использованием металлических акцентов. Каждая процедура проходит в атмосфере креативности и комфорта, где вы можете расслабиться и довериться рукам опытных мастеров.
+      </p>
+    </section>
+
+    <section id="masters" class="col-12 mb-4">
+      <h2>Наши мастера</h2>
+      <div id="mastersCarouselIndicators" class="carousel slide mx-auto" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          {% for master in masters %}
+            <button type="button" data-bs-target="#mastersCarouselIndicators" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
+          {% endfor %}
+        </div>
+        <div class="carousel-inner">
+          {% for master in masters %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+              <img src="{{ master.photo.url }}" class="d-block w-100" alt="{{ master.first_name }} {{ master.last_name }}">
+              <div class="carousel-caption d-none d-md-block">
+                <h5>{{ master.first_name }} {{ master.last_name }}</h5>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#mastersCarouselIndicators" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#mastersCarouselIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
+
+    <section id="services" class="col-12 mb-4">
+      <h2>Услуги</h2>
+      <p>
+        Когда вы заходите в наш барбер-шоп "Магнитный стиль", вы попадаете в волшебный мир, где ваши волосы и борода могут превратиться в шедевры, достойные галереи современного искусства. И все это благодаря нашему основателю Магнето, который знает толк в металлической магии, но не забывает про классические ножницы и бритву.
+
+Во-первых, наши мастера владеют магией магнитных стрижек. Нет, ваши волосы не будут притягивать холодильники, но они точно притянут всеобщее внимание. Хотите стильный и дерзкий образ? Легко! Магнето поднимет ваши волосы прямым путем левитации, пока мастер искусно орудует инструментами. Гравитация здесь бессильна!
+
+Ну и укладка — это вообще отдельная песня. Забудьте про скучные гели и лаки, у нас в арсенале есть металлические акценты, которые превращают волосы в маленькие фонарики блеска и стиля.
+
+А свадебный макияж? Вас ждет не просто крашение волос, а настоящее шоу металлистов! Теоретически, можно даже на 10 минут орудовать вашей головой в пустыне Сахара — настолько она будет блестеть и отражать солнечный свет.
+
+Не обошли вниманием и ваше лицо, конечно. У нас есть магнитное бритье с супер-гладким результатом. Ваша борода после посещения нас будет такой ухоженной, что соседи начнут ходить к вам за советами по уходу за волосами. И вы сможете с уверенностью заявлять, что уход за бородой — это тонкое искусство, особенно если в него вовлечены магниты.
+
+Для тех, кто не может побороться с усталостью, мы предложим массаж головы уровня «Ах, дай-ка я посплю прямо здесь». Ощущения такие приятные, что даже мысли, витавшие где-то на космическом уровне, начнут приземляться прямо под ваши чувственные локоны.
+
+В общем, в "Магнитном стиле" мы предлагаем полный спектр парикмахерских и ухаживающих процедур, чтобы каждый ваш визит заканчивался словами: "А ну, дайте мне зеркало еще раз взглянуть на такого красавца!"
+      </p>
+    </section>
+
+    <section id="reviews" class="col-12 mb-4">
+      <h2>Отзывы</h2>
+      <p>
+        Отзывы о барбершопе "Магнитный стиль" в основном восторженные и подчеркивают уникальность и профессионализм мастеров. Посетители отмечают креативный подход к стрижкам и укладкам, использование необычных техник с элементами металла и магнитов, что добавляет образу уникальности и стиля. Мастера умело выполняют каждое пожелание клиента, создавая не только модные, но и персонализированные образы. Клиенты также отмечают высококачественный уход за бородой и лицом, который превосходит ожидания и оставляет ощущения гладкости и свежести. Атмосфера в барбершопе теплая и дружелюбная, персонал всегда внимателен и готов помочь, создавая уютную обстановку, в которую хочется возвращаться. В целом, "Магнитный стиль" выделяется на фоне других заведений благодаря своему инновационному подходу и высокому стандарту обслуживания.
+    </section>
+
+    <section id="orderForm" class="col-12 mb-4">
+      <h2>Запись на стрижку</h2>
+      <form action="" method="post">
+        {% csrf_token %}
+        <div class="mb-3">{{ form.as_p }}</div>
+        <button type="submit" class="btn btn-dark">Отправить</button>
+      </form>
+    </section>
+
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        navLinks.forEach(nav => nav.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  });
+</script>
+{% endblock %}
