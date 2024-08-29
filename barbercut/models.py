@@ -5,7 +5,7 @@ class Master(models.Model):
     first_name = models.CharField(max_length=100, verbose_name='Имя')
     last_name = models.CharField(max_length=100, verbose_name='Фамилия')
     contact_info = models.TextField(max_length=255, verbose_name='Контактная информация')
-    photo = models.ImageField(upload_to='masters/photos/', blank=True, null=True, verbose_name='Фотография')
+    photo = models.ImageField(upload_to='masters/photos/', verbose_name='Фотография')
     services = models.ManyToManyField('Service', related_name='masters', verbose_name='Услуги')
     
     
@@ -22,8 +22,8 @@ class Service(models.Model):
 class Appointment(models.Model):
     name = models.CharField(max_length=255)
     phone = models.CharField(max_length=20)
-    master = models.ForeignKey(Master, on_delete=models.CASCADE)
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    master = models.ForeignKey(Master, on_delete=models.CASCADE, null=True, blank=True)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return f"Запись {self.name} с мастером {self.master}"
