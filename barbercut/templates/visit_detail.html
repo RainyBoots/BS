@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Детали заявки{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2 class="mb-4">Детали заявки</h2>
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text"><strong>Дата создания:</strong> {{ visit.appointment_date }}</p>
+                    <p class="card-text"><strong>Имя:</strong> {{ visit.client_name}}</p>
+                    <p class="card-text"><strong>Телефон:</strong> {{ visit.phone }}</p>
+                    <p class="card-text"><strong>Мастер:</strong> {{ visit.master.first_name }} {{ visit.master.last_name }}</p>
+                    <p class="card-text">
+                    {% if visit.master.photo %}
+                        <img src="{{ visit.master.photo.url }}" alt="{{ visit.master.first_name }} {{ visit.master.last_name }}" class="img-fluid mb-3">
+                    {% endif %}
+                    </p>
+                    <p class="card-text my-3"><strong>Услуга: {{ visit.service.name }} </strong></p>
+                    <a href="{% url 'visit-delete' visit.pk %}" class="btn btn-danger my-2">Удалить</a>
+                    <a href="{% url 'visit-edit' visit.pk %}" class="btn btn-dark my-2">Редактировать</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

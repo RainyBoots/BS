@@ -1,14 +1,14 @@
 from django import forms
-from .models import Appointment
+from .models import Visit
 import re
 
 
-class AppointmentForm(forms.ModelForm):
+class VisitModelForm (forms.ModelForm):
     class Meta:
-        model = Appointment
-        fields = ['name', 'phone', 'master', 'service']
+        model = Visit
+        fields = ['client_name', 'phone', 'master', 'service']
         widgets = {
-            'name': forms.TextInput(attrs={'placeholder': 'Имя', 'class': 'form-control'}),
+            'client_name': forms.TextInput(attrs={'placeholder': 'Имя', 'class': 'form-control'}),
             'phone': forms.TextInput(attrs={'type': 'tel', 'placeholder': 'Номер телефона', 'class': 'form-control'}),
             'master': forms.Select(attrs={'class': 'form-control'}),
             'services': forms.SelectMultiple(attrs={'class': 'form-control'}),
@@ -43,3 +43,4 @@ class AppointmentForm(forms.ModelForm):
                 raise forms.ValidationError(f'Мастер {master} не предоставляет услугу {service}.')
 
         return cleaned_data
+    

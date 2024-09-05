@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Master, Service, Appointment
+from .models import Master, Service, Visit
 
 
 @admin.register(Master)
@@ -14,9 +14,9 @@ class ServiceAdmin(admin.ModelAdmin):
     search_fields = ('name', 'price')
     
 
-@admin.register(Appointment)
-class AppointmentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'master', 'service')
-    list_filter = ('name', 'service')
-    search_fields = ('name', 'service')
+@admin.register(Visit)
+class VisitAdmin(admin.ModelAdmin):
+    list_display = ('client_name', 'master', 'service')
+    list_filter = ('client_name', 'service')
+    search_fields = ('client_name', 'service')
  

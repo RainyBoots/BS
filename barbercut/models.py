@@ -19,11 +19,12 @@ class Service(models.Model):
     def __str__(self):
         return str(self.name)
     
-class Appointment(models.Model):
-    name = models.CharField(max_length=255)
-    phone = models.CharField(max_length=20)
-    master = models.ForeignKey(Master, on_delete=models.CASCADE, null=True, blank=True)
-    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True, blank=True)
+class Visit(models.Model):
+    client_name = models.CharField(max_length=255, verbose_name='Имя')
+    phone = models.CharField(max_length=20, verbose_name='Телефон')
+    master = models.ForeignKey(Master, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Мастер')
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Услуги')
+    appointment_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания',)
 
     def __str__(self):
-        return f"Запись {self.name} с мастером {self.master}"
+        return f"Запись {self.client_name} с мастером {self.master}"
