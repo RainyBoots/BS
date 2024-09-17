@@ -3,6 +3,8 @@ from django.urls import path
 from barbercut.views import MainView, ThanksTemplateView, VisitCreateView, VisitDetailView, VisitUpdateView, VisitDeleteView, ServicesByMasterView
 from django.conf.urls.static import static
 from django.conf import settings
+from users import urls
+from django.conf.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,6 +19,7 @@ urlpatterns = [
     path("visit/<int:pk>/view/", VisitDetailView.as_view(), name="visit-view"),
     path("visit/<int:pk>/edit/", VisitUpdateView.as_view(), name="visit-edit"),
     path("visit/<int:pk>/delete/", VisitDeleteView.as_view(), name="visit-delete"),
+    path("user/", include(urls)),
 ]
 
 if settings.DEBUG:
