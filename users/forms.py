@@ -1,8 +1,9 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
-from django.core.validators import validate_email
+import email
+
 
 class LoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Имя пользователя'}))
@@ -10,35 +11,36 @@ class LoginForm(AuthenticationForm):
 
 
 class RegisterForm(UserCreationForm):
-    username_or_email = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Имя пользователя или Email'}))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Пароль'}), help_text='')
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Подтверждение пароля'}))
+    username = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Имя пользователя"}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"class": "form-control", "placeholder": "Адрес электронной почты"}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "Пароль"}),help_text="",)
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "Подтверждение пароля"}))
 
     class Meta:
         model = get_user_model()
-        fields = ('username_or_email', 'password1', 'password2')
+        fields = ("username", "email", "password1", "password2")
 
-    def clean_username_or_email(self):
-        data = self.cleaned_data['username_or_email']
-        if "@" in data:
-            try:
-                validate_email(data)
-            except ValidationError:
-                raise ValidationError("Введён некорректный адрес электронной почты.")
-        else:
-            if len(data) < 5:
-                raise ValidationError("Имя пользователя должно содержать не менее 5 символов.")
-        
-        return data
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        if get_user_model().objects.filter(email=email).exists():
+            raise ValidationError(
+                "Данный адрес электронной почты уже зарегистрирован в системе"
+            )
+        return email
     
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        if '@' in self.cleaned_data['username_or_email']:
-            user.email = self.cleaned_data['username_or_email']  
-            user.username = self.cleaned_data['username_or_email']  
-        else:
-            user.username = self.cleaned_data['username_or_email']
-        
-        if commit:
-            user.save()
-        return user
+class CustomPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={"class": "form-control", "placeholder": "Текущий пароль"}
+        )
+    )
+    new_password1 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={"class": "form-control", "placeholder": "Новый пароль"}
+        )
+    )
+    new_password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={"class": "form-control", "placeholder": "Подтверждение нового пароля"}
+        )
+    )
